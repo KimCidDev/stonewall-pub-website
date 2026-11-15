@@ -181,6 +181,7 @@
       var body = el("div", "dish__body");
       var top = el("div", "dish__top");
       top.appendChild(el("h3", "dish__name", d.name));
+      top.appendChild(el("span", "dish__dots"));
       top.appendChild(el("span", "dish__price", "$" + d.price.toFixed(2)));
       body.appendChild(top);
       body.appendChild(el("p", "dish__desc", d.desc));
