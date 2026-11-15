@@ -412,6 +412,10 @@ fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
   .dishes .dish .dish__photo::after { inset: 8px; }
   .dishes .dish .photo-slot__tag { top: 16px; left: 16px; font-size: 10px; padding: 5px 7px; }
   .dishes .dish .photo-slot__label { display: block; font-size: 20px; }
+  .dishes .dish .dish__photo::before { width: 44px; height: 34px; margin: -30px 0 0 -22px; background: radial-gradient(circle at 50% 55%, transparent 8px, rgba(243,233,218,.45) 9px, rgba(243,233,218,.45) 10.5px, transparent 11.5px); }
+  .topbar { padding: 10px max(32px, calc((100vw - 1080px) / 2)); }
+  .specials .section__head, .today-card, .week, .specials .fineprint { max-width: 720px; }
+  .bookform, .bookdone { max-width: 720px; }
 }
 
 @media (min-width: 1000px) {
