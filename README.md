@@ -46,7 +46,8 @@ python3 -m http.server 8000
 | `index.html` | Homepage markup |
 | `css/styles.css` | All styles, mobile-first |
 | `js/data.js` | **Content to edit**: hours, daily specials, menu, booking rules |
-| `assets/` | Logo (original + cream), favicon |
+| `assets/` | Logo (original + cream), favicon; `assets/dishes/` for dish photos |
+| `docs/dish-photo-prompts.md` | Prompts and file names for the 39 dish photos |
 | `js/main.js` | Behaviour: open status, specials, menu tabs, time slots, form |
 
 ## Still to confirm with the owner — `[a confirmar]`

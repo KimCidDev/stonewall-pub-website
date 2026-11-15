@@ -7,6 +7,11 @@
  */
 window.STONEWALL = {
 
+  /* Dish photos. Put the file in assets/dishes/<slug>.jpg (1600x1000 JPG)
+     and add the slug here — e.g. "fish-tacos". Dishes not listed keep the
+     empty photo frame. See docs/dish-photo-prompts.md for every slug. */
+  photos: [],
+
   /* Opening hours. Day index: 0 = Sunday … 6 = Saturday.
      "close" can be past midnight (e.g. "02:00" means 2 AM the next morning). */
   hours: [

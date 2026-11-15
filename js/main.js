@@ -58,6 +58,12 @@
     return e;
   }
 
+  /* "Fish Tacos" -> "fish-tacos", "Shepherd's Pie" -> "shepherds-pie" */
+  function slugify(name) {
+    return name.toLowerCase().replace(/['’]/g, "").replace(/&/g, "and")
+      .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+  }
+
   var now = calgaryNow();
 
   /* ---------- open / closed status ---------- */
@@ -171,11 +177,24 @@
 
     cat.dishes.forEach(function (d, i) {
       var li = el("li", "dish");
-      var photo = el("div", "dish__photo photo-slot photo-slot--v" + (i % 4));
-      photo.setAttribute("role", "img");
-      photo.setAttribute("aria-label", "Photo slot: " + d.name);
-      photo.appendChild(el("span", "photo-slot__tag", "Photo slot"));
-      photo.appendChild(el("span", "photo-slot__label", d.name));
+      var slug = slugify(d.name);
+      var photo;
+      if ((D.photos || []).indexOf(slug) !== -1) {
+        // a real file exists in assets/dishes/ — show it
+        photo = el("div", "dish__photo dish__photo--img");
+        var img = el("img");
+        img.src = "assets/dishes/" + slug + ".jpg";
+        img.alt = d.name;
+        img.loading = "lazy";
+        img.decoding = "async";
+        photo.appendChild(img);
+      } else {
+        photo = el("div", "dish__photo photo-slot photo-slot--v" + (i % 4));
+        photo.setAttribute("role", "img");
+        photo.setAttribute("aria-label", "Photo slot: " + d.name);
+        photo.appendChild(el("span", "photo-slot__tag", "Photo slot"));
+        photo.appendChild(el("span", "photo-slot__label", d.name));
+      }
       li.appendChild(photo);
 
       var body = el("div", "dish__body");
