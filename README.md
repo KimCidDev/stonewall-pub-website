@@ -4,7 +4,10 @@ New mobile-first site for **Stonewall Pub**, a neighbourhood pub at
 735 Ranchlands Blvd NW, Calgary, AB. Built by Femik.
 
 **Status:** prototype — homepage preview only, not yet validated.
-**Public link:** _not published yet_ (GitHub Pages, after the repo is created).
+**Repository:** https://github.com/KimCidDev/stonewall-pub-website
+**Public link (GitHub Pages):** https://kimciddev.github.io/stonewall-pub-website/
+
+Tested on mobile (390px) and desktop (1024px and 1440px).
 
 ## What's in the preview
 
