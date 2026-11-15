@@ -309,16 +309,6 @@ p { margin: 0; }
 .dishes .dish:nth-child(-n+2) .dish__body { padding: 12px 8px 8px; }
 .dishes .dish:nth-child(-n+2) .dish__name { font-size: 24px; }
 
-.photo-note {
-  margin: 26px auto 0;
-  padding: 22px 20px;
-  text-align: center;
-  border: 3px double rgba(199, 154, 75, .45);
-  background: var(--card);
-  font-size: 16px; color: var(--muted);
-  display: grid; gap: 8px;
-}
-.photo-note strong { font: italic 600 22px/1.2 var(--display); color: var(--brass-light); display: block; margin-bottom: 4px; }
 
 /* ---------- events: oxblood, like the logo ---------- */
 
@@ -490,7 +480,6 @@ fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
   .dishes .dish .photo-slot__label { display: block; }
   .dishes .dish .dish__body { padding: 10px 8px 6px; }
   .dishes .dish .dish__name { font-size: 23px; }
-  .photo-note { margin-top: 18px; padding: 16px 20px; }
 
   .events__list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
   .event, .event:last-child { text-align: left; padding: 16px 18px; border: 1px solid rgba(226, 193, 130, .2); background: rgba(0, 0, 0, .22); }
