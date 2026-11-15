@@ -356,6 +356,11 @@
     });
   }
 
+  // on wider screens the whole week sits open beside today's special
+  if (window.matchMedia("(min-width: 720px)").matches) {
+    document.querySelector(".week").open = true;
+  }
+
   document.getElementById("year").textContent = now.y;
   renderStatus();
   renderSpecials();

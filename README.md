@@ -12,8 +12,8 @@ Tested on mobile (390px) and desktop (1024px and 1440px).
 ## What's in the preview
 
 - The pub's real logo (`assets/logo-stonewall.png`; a cream copy for dark backgrounds)
-- Visual direction: a subtle tavern — parchment, oxblood from the logo, aged brass,
-  dark wood, a chalkboard for the daily special; Cormorant Garamond + Source Serif 4
+- Visual direction: a pub at night — dark mahogany, bottle green, aged brass and the
+  oxblood of the logo; chalkboard for the daily special; Cormorant Garamond + Source Serif 4
 
 - Sticky action bar: **Book a table**, **See the menu**, tap-to-call — always on screen
 - Live "Open now / Closed" status in Calgary time
