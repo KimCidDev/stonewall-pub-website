@@ -18,14 +18,17 @@ Tested on mobile (390px) and desktop (1024px and 1440px).
 - Sticky action bar: **Book a table**, **See the menu**, tap-to-call — always on screen
 - Live "Open now / Closed" status in Calgary time
 - Today's special with the real date, plus the whole week
-- Food menu (Appetizers, 15 dishes) with a reserved **photo slot per dish** —
-  no stock photos; the slots are for the in-house photo session
+- Food menu with a **photo slot per dish** (no stock photos). Appetizers (15 dishes)
+  are the real menu; Sliders, Handhelds, Pies, Sides, Main Course and Breakfast are
+  **example dishes for the mockup** — descriptions and prices are placeholders
 - Nights at Stonewall (karaoke, game nights, live music, free pool Sunday, darts)
 - Booking form with readable 12-hour slots, only inside opening hours
 - Address, directions, hours table (today highlighted), working Instagram link
 
-Booking is a **preview only**: the form validates and shows a summary but sends
-nothing. It must be connected to the pub's current booking system before launch.
+Booking **simulates the full flow** (sending → confirmation with reference number,
+next steps, example confirmation text, working "Add to calendar" .ics, directions).
+Nothing is actually booked: it must be connected to the pub's current booking
+system before launch.
 
 ## How to open
 

@@ -164,7 +164,7 @@
     if (!cat.dishes.length) {
       var li = el("li", "dish dish--pending");
       li.appendChild(el("h3", "dish__name", cat.name));
-      li.appendChild(el("p", "dish__desc", "These dishes move over from the current menu — each with its own photo — in the full menu page."));
+      li.appendChild(el("p", "dish__desc", "Dishes coming soon."));
       list.appendChild(li);
       return;
     }
@@ -188,7 +188,7 @@
       li.appendChild(body);
       list.appendChild(li);
     });
-    if (!silent) document.getElementById("menuTitle").scrollIntoView({ behavior: "smooth", block: "start" });
+    if (!silent) document.getElementById("menu").scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   /* ---------- booking: date, party, sane time slots ---------- */
@@ -284,7 +284,7 @@
       if (i === 2) o.selected = true;
       bkParty.appendChild(o);
     }
-    var big = el("option", null, "13+ — call us");
+    var big = el("option", null, "13+ (group or private event)");
     big.value = "13+";
     bkParty.appendChild(big);
 
@@ -294,11 +294,12 @@
     var form = document.getElementById("bookForm");
     var err = document.getElementById("bkError");
     var done = document.getElementById("bookDone");
+    var submitBtn = form.querySelector("button[type=submit]");
+    var calUrl = null;
 
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       var problems = [];
-      if (bkParty.value === "13+") problems.push("For 13 or more, please call us at 403-241-2877.");
       if (!bkDate.value) problems.push("Pick a date.");
       if (chosenTime === null) problems.push("Pick a time.");
       if (!form.elements["name"].value.trim()) problems.push("Add your name.");
@@ -309,16 +310,91 @@
         return;
       }
       err.hidden = true;
+
+      // simulate the request going out
+      submitBtn.disabled = true;
+      submitBtn.classList.add("is-sending");
+      submitBtn.textContent = "Sending your request…";
+      setTimeout(function () {
+        submitBtn.disabled = false;
+        submitBtn.classList.remove("is-sending");
+        submitBtn.textContent = "Request this table";
+        showConfirmation();
+      }, 1300);
+    });
+
+    function showConfirmation() {
       var p = bkDate.value.split("-");
-      var dow = new Date(Date.UTC(+p[0], +p[1] - 1, +p[2])).getUTCDay();
-      document.getElementById("bookSummary").textContent =
-        "Table for " + bkParty.value + " on " + DAYS[dow] + ", " + MONTHS[+p[1] - 1] + " " + (+p[2]) +
-        " at " + fmt12(chosenTime) + ", under " + form.elements["name"].value.trim() + ".";
+      // slots after midnight belong to the next calendar day
+      var day = addDays(+p[0], +p[1] - 1, +p[2], chosenTime >= 1440 ? 1 : 0);
+      var t = chosenTime % 1440;
+      var name = form.elements["name"].value.trim();
+      var first = name.split(/\s+/)[0];
+      var party = bkParty.value;
+      var isGroup = party === "13+";
+      var partyText = isGroup ? "13+ guests" : party + (party === "1" ? " guest" : " guests");
+      var dateText = DAYS[day.dow] + ", " + MONTHS[day.m] + " " + day.d;
+      var shortDate = DAYS[day.dow].slice(0, 3) + " " + MONTHS[day.m].slice(0, 3) + " " + day.d;
+      var digits = form.elements["phone"].value.replace(/\D/g, "").slice(-10);
+      var phoneText = "(" + digits.slice(0, 3) + ") " + digits.slice(3, 6) + "-" + digits.slice(6);
+      var ref = "SW-" + String(Math.floor(1000 + Math.random() * 9000));
+
+      document.getElementById("doneName").textContent = first;
+      document.getElementById("doneRef").textContent = ref;
+      document.getElementById("doneDate").textContent = dateText;
+      document.getElementById("doneTime").textContent = fmt12(t);
+      document.getElementById("doneParty").textContent = partyText;
+      document.getElementById("donePhone").textContent = phoneText;
+
+      var steps = done.querySelectorAll(".steps li");
+      if (isGroup) {
+        steps[1].querySelector("strong").textContent = "We call you to plan it";
+        steps[1].querySelector("span").textContent = "For groups and private events we'll call " + phoneText + " to sort out space and food.";
+      } else {
+        steps[1].querySelector("strong").textContent = "We confirm by text";
+        steps[1].querySelector("span").textContent = "";
+        steps[1].querySelector("span").appendChild(document.createTextNode("You'll get a text at "));
+        steps[1].querySelector("span").appendChild(el("b", null, phoneText));
+        steps[1].querySelector("span").appendChild(document.createTextNode(" once your table is set."));
+      }
+
+      document.getElementById("doneSms").textContent = isGroup
+        ? "Hi " + first + ", thanks for your group enquiry for " + shortDate + " at " + fmt12(t) + " (ref " + ref + "). We'll give you a call shortly to plan it. — Stonewall Pub"
+        : "Hi " + first + ", your table for " + party + " on " + shortDate + " at " + fmt12(t) + " is confirmed (ref " + ref + "). Need to change it? Call 403-241-2877. See you soon! — Stonewall Pub";
+
+      var email = form.elements["email"].value.trim();
+      var emailP = document.getElementById("doneEmail");
+      emailP.hidden = !email;
+      emailP.textContent = email ? "A copy of this request was sent to " + email + "." : "";
+
+      // real, working "Add to calendar" (.ics file)
+      function pad(n) { return (n < 10 ? "0" : "") + n; }
+      var start = day.y + pad(day.m + 1) + pad(day.d) + "T" + pad(Math.floor(t / 60)) + pad(t % 60) + "00";
+      var endMins = t + 120;
+      var endDay = addDays(day.y, day.m, day.d, endMins >= 1440 ? 1 : 0);
+      endMins = endMins % 1440;
+      var end = endDay.y + pad(endDay.m + 1) + pad(endDay.d) + "T" + pad(Math.floor(endMins / 60)) + pad(endMins % 60) + "00";
+      var ics = [
+        "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Stonewall Pub//Booking//EN",
+        "BEGIN:VEVENT",
+        "UID:" + ref + "@stonewallpub.ca",
+        "DTSTAMP:" + new Date().toISOString().replace(/[-:]/g, "").slice(0, 15) + "Z",
+        "DTSTART;TZID=America/Edmonton:" + start,
+        "DTEND;TZID=America/Edmonton:" + end,
+        "SUMMARY:Table at Stonewall Pub (" + partyText + ")",
+        "LOCATION:Stonewall Pub\\, 735 Ranchlands Blvd NW\\, Calgary\\, AB T3G 2C5",
+        "DESCRIPTION:Booking ref " + ref + ". Questions? Call 403-241-2877.",
+        "END:VEVENT", "END:VCALENDAR"
+      ].join("\r\n");
+      if (calUrl) URL.revokeObjectURL(calUrl);
+      calUrl = URL.createObjectURL(new Blob([ics], { type: "text/calendar" }));
+      document.getElementById("doneCal").href = calUrl;
+
       form.hidden = true;
       done.hidden = false;
-      done.focus();
-      done.scrollIntoView({ behavior: "smooth", block: "center" });
-    });
+      done.focus({ preventScroll: true });
+      done.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
 
     document.getElementById("bookAgain").addEventListener("click", function () {
       done.hidden = true;

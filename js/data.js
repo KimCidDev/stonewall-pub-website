@@ -62,11 +62,66 @@ window.STONEWALL = {
         { name: "Quesadilla", desc: "Grilled with bell pepper, onions, 3-cheese, salsa, sour cream", price: 15.00 }
       ]
     },
-    { id: "sliders",    name: "Sliders",     dishes: [] },
-    { id: "handhelds",  name: "Handhelds",   dishes: [] },
-    { id: "pies",       name: "Pies",        dishes: [] },
-    { id: "sides",      name: "Sides",       dishes: [] },
-    { id: "main",       name: "Main Course", dishes: [] },
-    { id: "breakfast",  name: "Breakfast",   dishes: [] }
+    /* ------------------------------------------------------------------
+       EXAMPLE DISHES — layout mockup only.
+       Names follow what the pub is known to serve (sliders, burgers,
+       steak sandwich, the four pies, daily kettle, breakfast), but the
+       descriptions and prices below are PLACEHOLDERS [a confirmar].
+       Replace with the real menu before launch.
+       ------------------------------------------------------------------ */
+    {
+      id: "sliders", name: "Sliders", example: true,
+      dishes: [
+        { name: "Classic Beef Sliders", desc: "Three sliders, cheddar, pickles, house sauce", price: 16.00 },
+        { name: "Pulled Pork Sliders", desc: "Three sliders, BBQ pulled pork, coleslaw", price: 16.00 },
+        { name: "Crispy Chicken Sliders", desc: "Three sliders, buttermilk chicken, lettuce, chipotle mayo", price: 16.00 },
+        { name: "Mix & Match Sliders", desc: "One of each, served with fries", price: 18.00 }
+      ]
+    },
+    {
+      id: "handhelds", name: "Handhelds", example: true,
+      dishes: [
+        { name: "Bacon Cheeseburger", desc: "Beef patty, bacon, cheddar, lettuce, tomato, fries", price: 19.00 },
+        { name: "Steak Sandwich", desc: "Grilled steak on garlic toast, sautéed onions, fries", price: 22.00 },
+        { name: "Clubhouse", desc: "Turkey, bacon, lettuce, tomato, mayo on toasted bread", price: 18.00 },
+        { name: "Chicken Caesar Wrap", desc: "Grilled chicken, romaine, parmesan, Caesar dressing", price: 17.00 }
+      ]
+    },
+    {
+      id: "pies", name: "Pies", example: true,
+      dishes: [
+        { name: "Shepherd's Pie", desc: "Seasoned beef and vegetables under mashed potato", price: 19.00 },
+        { name: "Beef Pie", desc: "Slow-braised beef in gravy, flaky pastry", price: 19.00 },
+        { name: "Chicken Pie", desc: "Chicken and vegetables in a creamy sauce, flaky pastry", price: 18.00 },
+        { name: "Veggie Pie", desc: "Seasonal vegetables in herb gravy, flaky pastry", price: 17.00 }
+      ]
+    },
+    {
+      id: "sides", name: "Sides", example: true,
+      dishes: [
+        { name: "Daily Kettle", desc: "Ask your server for today's soup", price: 7.00 },
+        { name: "Fries", desc: "Hand-cut, with ketchup or gravy", price: 6.00 },
+        { name: "Onion Rings", desc: "Beer-battered, with chipotle mayo", price: 8.00 },
+        { name: "Side Caesar Salad", desc: "Romaine, parmesan, croutons, Caesar dressing", price: 8.00 }
+      ]
+    },
+    {
+      id: "main", name: "Main Course", example: true,
+      dishes: [
+        { name: "Striploin Steak", desc: "8 oz striploin, garlic toast, fries or salad", price: 29.00 },
+        { name: "Fish & Chips", desc: "Beer-battered haddock, fries, coleslaw, tartar", price: 21.00 },
+        { name: "Chicken Caesar Salad", desc: "Grilled chicken breast, romaine, parmesan, croutons", price: 19.00 },
+        { name: "Liver & Onions", desc: "Pan-fried liver, sautéed onions, mashed potato, gravy", price: 20.00 }
+      ]
+    },
+    {
+      id: "breakfast", name: "Breakfast", example: true,
+      dishes: [
+        { name: "Classic Breakfast", desc: "Two eggs, bacon or sausage, hash browns, toast", price: 15.00 },
+        { name: "Eggs Benedict", desc: "Poached eggs, ham, hollandaise, hash browns", price: 17.00 },
+        { name: "Breakfast Sandwich", desc: "Egg, bacon, cheddar on a toasted bun, hash browns", price: 14.00 },
+        { name: "Steak & Eggs", desc: "Striploin, two eggs, hash browns, toast", price: 26.00 }
+      ]
+    }
   ]
 };
