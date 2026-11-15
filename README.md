@@ -11,6 +11,10 @@ Tested on mobile (390px) and desktop (1024px and 1440px).
 
 ## What's in the preview
 
+- The pub's real logo (`assets/logo-stonewall.png`; a cream copy for dark backgrounds)
+- Visual direction: a subtle tavern — parchment, oxblood from the logo, aged brass,
+  dark wood, a chalkboard for the daily special; Cormorant Garamond + Source Serif 4
+
 - Sticky action bar: **Book a table**, **See the menu**, tap-to-call — always on screen
 - Live "Open now / Closed" status in Calgary time
 - Today's special with the real date, plus the whole week
@@ -39,6 +43,7 @@ python3 -m http.server 8000
 | `index.html` | Homepage markup |
 | `css/styles.css` | All styles, mobile-first |
 | `js/data.js` | **Content to edit**: hours, daily specials, menu, booking rules |
+| `assets/` | Logo (original + cream), favicon |
 | `js/main.js` | Behaviour: open status, specials, menu tabs, time slots, form |
 
 ## Still to confirm with the owner — `[a confirmar]`
