@@ -5,13 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Stonewall Pub — Neighbourhood pub in Ranchlands, NW Calgary</title>
   <meta name="description" content="Stonewall Pub: your neighbourhood pub in Ranchlands, NW Calgary. Pub food, daily specials, darts, pool tables and friendly staff. Book a table at 735 Ranchlands Blvd NW.">
-  <meta name="theme-color" content="#1c1410">
+  <meta name="theme-color" content="#f3eadb">
   <meta property="og:title" content="Stonewall Pub — Ranchlands, Calgary">
   <meta property="og:description" content="Neighbourhood pub with pub food, daily specials, darts and pool. Book a table.">
   <meta property="og:type" content="website">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,800&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
   <script type="application/ld+json">
   {
@@ -40,10 +41,19 @@
 <body>
   <a class="skip" href="#main">Skip to content</a>
 
-  <!-- Top bar: brand, live open/closed status, tap-to-call -->
+  <!-- Ornament used under headings (referenced with <use>) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="orn" viewBox="0 0 120 12">
+      <path d="M0 6h46M74 6h46" stroke="currentColor" stroke-width="1"/>
+      <path d="M60 1l5 5-5 5-5-5z" fill="currentColor"/>
+      <circle cx="50" cy="6" r="1.5" fill="currentColor"/><circle cx="70" cy="6" r="1.5" fill="currentColor"/>
+    </symbol>
+  </svg>
+
+  <!-- Top bar: logo, live open/closed status, tap-to-call -->
   <header class="topbar" id="top">
     <a class="brand" href="#top" aria-label="Stonewall Pub — back to top">
-      <span class="brand__name">Stonewall</span><span class="brand__pub">Pub</span>
+      <img src="assets/logo-stonewall.png" alt="Stonewall Pub" width="762" height="168">
     </a>
     <span class="status" id="openStatus" aria-live="polite">Hours</span>
     <a class="topbar__call" href="tel:+14032412877" aria-label="Call Stonewall Pub at 403-241-2877">
@@ -56,45 +66,50 @@
 
     <!-- HERO -->
     <section class="hero" aria-labelledby="heroTitle">
-      <div class="hero__photo photo-slot photo-slot--hero" role="img" aria-label="Photo slot: the bar and pool tables at Stonewall Pub">
-        <span class="photo-slot__tag">Photo slot</span>
-        <span class="photo-slot__label">The bar &amp; pool tables — shot in-house</span>
-      </div>
       <div class="hero__body">
-        <p class="eyebrow">Ranchlands · NW Calgary</p>
+        <p class="smallcaps">Ranchlands &middot; North West Calgary</p>
         <h1 id="heroTitle">Your neighbourhood pub, <em>with real pub food.</em></h1>
+        <svg class="orn" aria-hidden="true"><use href="#orn"/></svg>
         <p class="hero__lede">Darts, pool tables, 9 VLTs and a friendly crew. Come hang out with us in Ranchlands.</p>
         <div class="hero__ctas">
           <a class="btn btn--primary" href="#book" data-scroll>Book a table</a>
           <a class="btn btn--ghost" href="#menu" data-scroll>See the menu</a>
         </div>
-        <ul class="quickfacts">
-          <li><span class="qf__k">Today</span><span class="qf__v" id="todayHours">11 AM – late</span></li>
-          <li><span class="qf__k">Where</span><a class="qf__v" href="https://www.google.com/maps/search/?api=1&amp;query=Stonewall+Pub+735+Ranchlands+Blvd+NW+Calgary+AB+T3G+2C5" target="_blank" rel="noopener">735 Ranchlands Blvd NW ↗</a></li>
-        </ul>
       </div>
+      <figure class="hero__frame">
+        <div class="photo-slot photo-slot--hero" role="img" aria-label="Photo slot: the bar and pool tables at Stonewall Pub">
+          <span class="photo-slot__tag">Photo slot</span>
+          <span class="photo-slot__label">The bar &amp; pool tables</span>
+        </div>
+        <figcaption class="quickfacts">
+          <span><span class="qf__k">Today</span> <span id="todayHours">11 AM – late</span></span>
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Stonewall+Pub+735+Ranchlands+Blvd+NW+Calgary+AB+T3G+2C5" target="_blank" rel="noopener"><span class="qf__k">Find us</span> 735 Ranchlands Blvd NW ↗</a>
+        </figcaption>
+      </figure>
     </section>
 
-    <!-- TODAY'S SPECIAL -->
+    <!-- TODAY'S SPECIAL — chalkboard -->
     <section class="section specials" id="specials" aria-labelledby="specialsTitle">
-      <div class="section__head">
-        <p class="eyebrow" id="todayLabel">Today</p>
-        <h2 id="specialsTitle">Today's special</h2>
+      <div class="board">
+        <p class="board__date" id="todayLabel">Today</p>
+        <h2 id="specialsTitle" class="board__title">Today's Special</h2>
+        <svg class="orn" aria-hidden="true"><use href="#orn"/></svg>
+        <div class="today-card" id="todayCard"><!-- filled by js/main.js --></div>
+        <details class="week">
+          <summary>The week on the board</summary>
+          <ol class="week__list" id="weekList"><!-- filled by js/main.js --></ol>
+        </details>
       </div>
-      <div class="today-card" id="todayCard"><!-- filled by js/main.js --></div>
-      <details class="week">
-        <summary>This week's specials</summary>
-        <ol class="week__list" id="weekList"><!-- filled by js/main.js --></ol>
-      </details>
-      <p class="fineprint">Prices as listed on Nov 15, 2026 and subject to change. <span class="tbc">[a confirmar]</span></p>
+      <p class="fineprint center">Prices as listed on Nov 15, 2026 and subject to change. <span class="tbc">[a confirmar]</span></p>
     </section>
 
     <!-- MENU -->
     <section class="section menu" id="menu" aria-labelledby="menuTitle">
-      <div class="section__head">
-        <p class="eyebrow">Food menu</p>
+      <header class="section__head">
+        <p class="smallcaps">The Food Menu</p>
         <h2 id="menuTitle">Pick your plate before you leave the house.</h2>
-      </div>
+        <svg class="orn" aria-hidden="true"><use href="#orn"/></svg>
+      </header>
 
       <nav class="cats" aria-label="Menu categories">
         <ul class="cats__list" id="catList"><!-- filled by js/main.js --></ul>
@@ -103,34 +118,36 @@
       <ul class="dishes" id="dishList"><!-- filled by js/main.js --></ul>
 
       <aside class="photo-note">
-        <strong>Every dish gets a real photo.</strong>
-        The empty frames above are reserved for a photo session at Stonewall — real plates from the kitchen, no stock images. The same photos go on the new in-pub TVs and on Instagram.
+        <p class="smallcaps">Coming to every plate</p>
+        <p><strong>A real photograph of each dish.</strong> The empty frames are reserved for a photo session at Stonewall — real plates from our kitchen, never stock images. The same photos will run on the TVs in the pub and on Instagram.</p>
       </aside>
 
-      <p class="fineprint">Dietary &amp; allergen info: <span class="tbc">[a confirmar]</span> · Downloadable menu (PDF): <span class="tbc">[a confirmar]</span></p>
+      <p class="fineprint center">Dietary &amp; allergen info: <span class="tbc">[a confirmar]</span> &middot; Printable menu (PDF): <span class="tbc">[a confirmar]</span></p>
     </section>
 
     <!-- EVENTS -->
     <section class="section events" id="events" aria-labelledby="eventsTitle">
-      <div class="section__head">
-        <p class="eyebrow">Nights at Stonewall</p>
+      <header class="section__head">
+        <p class="smallcaps">Nights at Stonewall</p>
         <h2 id="eventsTitle">Something on most nights.</h2>
-      </div>
+        <svg class="orn" aria-hidden="true"><use href="#orn"/></svg>
+      </header>
       <ul class="events__list">
-        <li class="event"><span class="event__day">Sunday</span><h3>Free pool</h3><p>Pool tables are free all Sunday.</p><span class="tbc">Hours [a confirmar]</span></li>
-        <li class="event"><span class="event__day">Date [a confirmar]</span><h3>Karaoke</h3><p>Grab the mic.</p></li>
-        <li class="event"><span class="event__day">Date [a confirmar]</span><h3>Game nights</h3><p>Bring your crew.</p></li>
-        <li class="event"><span class="event__day">Date [a confirmar]</span><h3>Live music</h3><p>Live music on select nights.</p></li>
-        <li class="event"><span class="event__day">Every day</span><h3>Darts &amp; pool</h3><p>Dart boards and pool tables, open whenever we are.</p></li>
+        <li class="event"><span class="event__day">Sundays</span><div><h3>Free pool</h3><p>The tables are on the house all Sunday. <span class="tbc">Hours [a confirmar]</span></p></div></li>
+        <li class="event"><span class="event__day">Every day</span><div><h3>Darts &amp; pool</h3><p>Dart boards and pool tables, open whenever we are.</p></div></li>
+        <li class="event"><span class="event__day"><span class="tbc">Date [a confirmar]</span></span><div><h3>Karaoke</h3><p>Grab the mic.</p></div></li>
+        <li class="event"><span class="event__day"><span class="tbc">Date [a confirmar]</span></span><div><h3>Game nights</h3><p>Bring your crew.</p></div></li>
+        <li class="event"><span class="event__day"><span class="tbc">Date [a confirmar]</span></span><div><h3>Live music</h3><p>Live music on select nights.</p></div></li>
       </ul>
     </section>
 
     <!-- BOOKING -->
     <section class="section book" id="book" aria-labelledby="bookTitle">
-      <div class="section__head">
-        <p class="eyebrow">Reservations</p>
+      <header class="section__head">
+        <p class="smallcaps">Reservations</p>
         <h2 id="bookTitle">Book a table</h2>
-      </div>
+        <svg class="orn" aria-hidden="true"><use href="#orn"/></svg>
+      </header>
 
       <form class="bookform" id="bookForm" novalidate>
         <fieldset class="bookform__row">
@@ -180,7 +197,7 @@
       </form>
 
       <div class="bookdone" id="bookDone" hidden tabindex="-1">
-        <p class="eyebrow">Preview</p>
+        <p class="smallcaps">Preview</p>
         <h3>Request ready.</h3>
         <p id="bookSummary"></p>
         <p class="fineprint">This is a design preview — the request was not sent. On the live site it connects to the pub's current booking system.</p>
@@ -190,48 +207,52 @@
 
     <!-- VISIT -->
     <section class="section visit" id="visit" aria-labelledby="visitTitle">
-      <div class="section__head">
-        <p class="eyebrow">Visit</p>
+      <header class="section__head">
+        <p class="smallcaps">Visit</p>
         <h2 id="visitTitle">Find us in Ranchlands</h2>
-      </div>
+        <svg class="orn" aria-hidden="true"><use href="#orn"/></svg>
+      </header>
       <div class="visit__grid">
         <address class="visit__card">
           <strong>Stonewall Pub</strong><br>
           735 Ranchlands Blvd NW<br>
           Calgary, AB T3G 2C5
           <div class="visit__actions">
-            <a class="btn btn--small" href="https://www.google.com/maps/dir/?api=1&amp;destination=735+Ranchlands+Blvd+NW+Calgary+AB+T3G+2C5" target="_blank" rel="noopener">Directions</a>
+            <a class="btn btn--small btn--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=735+Ranchlands+Blvd+NW+Calgary+AB+T3G+2C5" target="_blank" rel="noopener">Directions</a>
             <a class="btn btn--small btn--ghost" href="tel:+14032412877">403-241-2877</a>
           </div>
         </address>
-        <table class="hours" aria-label="Opening hours">
-          <tbody id="hoursBody"><!-- filled by js/main.js --></tbody>
-        </table>
+        <div class="hours-card">
+          <p class="smallcaps">Opening hours</p>
+          <table class="hours" aria-label="Opening hours">
+            <tbody id="hoursBody"><!-- filled by js/main.js --></tbody>
+          </table>
+        </div>
       </div>
-      <p class="fineprint">Parking &amp; transit: <span class="tbc">[a confirmar]</span></p>
+      <p class="fineprint center">Parking &amp; transit: <span class="tbc">[a confirmar]</span></p>
     </section>
 
   </main>
 
   <footer class="footer">
     <div class="footer__brand">
-      <span class="brand"><span class="brand__name">Stonewall</span><span class="brand__pub">Pub</span></span>
+      <img src="assets/logo-stonewall-light.png" alt="Stonewall Pub" width="762" height="168">
       <p>Neighbourhood pub in Ranchlands, NW Calgary.</p>
     </div>
     <ul class="footer__links">
       <li><a href="tel:+14032412877">403-241-2877</a></li>
       <li><a href="mailto:contact@stonewallpub.ca">contact@stonewallpub.ca</a></li>
       <li><a href="mailto:ramesh@stonewallpub.ca">ramesh@stonewallpub.ca</a></li>
-      <li><a href="https://www.google.com/maps/dir/?api=1&amp;destination=735+Ranchlands+Blvd+NW+Calgary+AB+T3G+2C5" target="_blank" rel="noopener">735 Ranchlands Blvd NW · Directions</a></li>
+      <li><a href="https://www.google.com/maps/dir/?api=1&amp;destination=735+Ranchlands+Blvd+NW+Calgary+AB+T3G+2C5" target="_blank" rel="noopener">735 Ranchlands Blvd NW &middot; Directions</a></li>
     </ul>
     <a class="social" href="https://www.instagram.com/stonewallpub/" target="_blank" rel="noopener" aria-label="Stonewall Pub on Instagram">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7.3A4.7 4.7 0 1 0 12 16.7 4.7 4.7 0 0 0 12 7.3zm0 7.7a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm6-7.9a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0zM21.9 7c-.1-1.6-.4-3-1.6-4.2S17.6 1.2 16 1.1C14.4 1 9.6 1 8 1.1 6.4 1.2 5 1.5 3.8 2.7S2.2 5.4 2.1 7C2 8.6 2 13.4 2.1 15c.1 1.6.4 3 1.6 4.2S6.4 20.8 8 20.9c1.6.1 6.4.1 8 0 1.6-.1 3-.4 4.2-1.6s1.5-2.6 1.6-4.2c.1-1.6.1-6.4 0-8zm-2.1 9.7a3.3 3.3 0 0 1-1.8 1.8c-1.3.5-4.3.4-5.9.4s-4.6.1-5.9-.4a3.3 3.3 0 0 1-1.8-1.8c-.5-1.3-.4-4.3-.4-5.7s-.1-4.4.4-5.7A3.3 3.3 0 0 1 6.1 3.5C7.4 3 10.4 3.1 12 3.1s4.6-.1 5.9.4a3.3 3.3 0 0 1 1.8 1.8c.5 1.3.4 4.3.4 5.7s.1 4.4-.4 5.7z"/></svg>
       <span>@stonewallpub</span>
     </a>
-    <p class="footer__copy">© <span id="year">2026</span> Stonewall Pub · Site preview by Femik</p>
+    <p class="footer__copy">© <span id="year">2026</span> Stonewall Pub &middot; Site preview by Femik</p>
   </footer>
 
-  <!-- Always-visible action bar (mobile) -->
+  <!-- Always-visible action bar -->
   <nav class="actionbar" aria-label="Quick actions">
     <a class="actionbar__btn actionbar__btn--primary" href="#book" data-scroll>Book a table</a>
     <a class="actionbar__btn" href="#menu" data-scroll>See the menu</a>
