@@ -44,6 +44,17 @@ window.STONEWALL = {
     maxParty: 12
   },
 
+  /* Bar menu. The current site lists 14 beers and wines under one "LIQUOR"
+     heading (3 of them at CA$ 0.00) and the homepage promises cocktails and
+     premium spirits that are not listed anywhere. Items and prices: [a confirmar]
+     with the owner. Format per item: { name: "…", desc: "…", price: 7.50 } */
+  drinks: [
+    { id: "draught",  name: "On draught",          items: [] },
+    { id: "bottles",  name: "Bottles & cans",      items: [] },
+    { id: "wine",     name: "Wine",                items: [] },
+    { id: "cocktails",name: "Cocktails & spirits", items: [] }
+  ],
+
   /* Menu. Only categories with dishes are browsable; the rest are listed as coming. */
   menu: [
     {

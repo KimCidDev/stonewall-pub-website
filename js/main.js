@@ -64,6 +64,8 @@
       .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
   }
 
+  var SMOOTH = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+
   var now = calgaryNow();
 
   /* ---------- open / closed status ---------- */
@@ -117,7 +119,21 @@
 
     var card = document.getElementById("todayCard");
     card.textContent = "";
-    card.appendChild(specialItems(D.specials[now.dow]));
+
+    // Never show an empty board: if today has no special, show the next day that has one.
+    var showDay = { y: now.y, m: now.m, d: now.d, dow: now.dow };
+    if (!D.specials[now.dow].length) {
+      for (var k = 1; k < 7; k++) {
+        var nd = addDays(now.y, now.m, now.d, k);
+        if (D.specials[nd.dow].length) { showDay = nd; break; }
+      }
+      if (showDay.dow !== now.dow) {
+        document.getElementById("specialsTitle").textContent = "Next Special";
+        document.getElementById("todayLabel").textContent =
+          (showDay.dow === (now.dow + 1) % 7 ? "Tomorrow · " : "") + DAYS[showDay.dow] + ", " + MONTHS[showDay.m] + " " + showDay.d;
+      }
+    }
+    card.appendChild(specialItems(D.specials[showDay.dow]));
     if (now.dow === 0) card.appendChild(el("p", "today-card__note", "Sunday is happy hour all day — and the pool tables are free."));
     var hh = el("p", "today-card__hh");
     hh.appendChild(el("span", null, "Happy hour on other days: "));
@@ -193,7 +209,6 @@
         photo.setAttribute("role", "img");
         photo.setAttribute("aria-label", "Photo slot: " + d.name);
         photo.appendChild(el("span", "photo-slot__tag", "Photo slot"));
-        photo.appendChild(el("span", "photo-slot__label", d.name));
       }
       li.appendChild(photo);
 
@@ -207,7 +222,7 @@
       li.appendChild(body);
       list.appendChild(li);
     });
-    if (!silent) document.getElementById("menu").scrollIntoView({ behavior: "smooth", block: "start" });
+    if (!silent) document.getElementById("menu").scrollIntoView({ behavior: SMOOTH, block: "start" });
   }
 
   /* ---------- booking: date, party, sane time slots ---------- */
@@ -358,7 +373,7 @@
       var phoneText = "(" + digits.slice(0, 3) + ") " + digits.slice(3, 6) + "-" + digits.slice(6);
       var ref = "SW-" + String(Math.floor(1000 + Math.random() * 9000));
 
-      document.getElementById("doneName").textContent = first;
+      document.getElementById("doneTitle").textContent = first ? "See you soon, " + first + "." : "See you soon!";
       document.getElementById("doneRef").textContent = ref;
       document.getElementById("doneDate").textContent = dateText;
       document.getElementById("doneTime").textContent = fmt12(t);
@@ -412,13 +427,44 @@
       form.hidden = true;
       done.hidden = false;
       done.focus({ preventScroll: true });
-      done.scrollIntoView({ behavior: "smooth", block: "start" });
+      done.scrollIntoView({ behavior: SMOOTH, block: "start" });
     }
 
     document.getElementById("bookAgain").addEventListener("click", function () {
       done.hidden = true;
       form.hidden = false;
-      form.scrollIntoView({ behavior: "smooth", block: "start" });
+      form.scrollIntoView({ behavior: SMOOTH, block: "start" });
+    });
+  }
+
+  /* ---------- drinks ---------- */
+
+  function renderDrinks() {
+    var wrap = document.getElementById("drinkList");
+    if (!wrap || !D.drinks) return;
+    wrap.textContent = "";
+    D.drinks.forEach(function (c) {
+      var card = el("section", "drinkcat");
+      card.appendChild(el("h3", "drinkcat__name", c.name));
+      var ul = el("ul", "drinkcat__list");
+      if (!c.items.length) {
+        var li = el("li", "drinkcat__tbc");
+        li.appendChild(el("span", null, "List & prices "));
+        li.appendChild(el("span", "tbc", "[a confirmar]"));
+        ul.appendChild(li);
+      }
+      c.items.forEach(function (d) {
+        var li = el("li", "drink");
+        var top = el("div", "dish__top");
+        top.appendChild(el("span", "drink__name", d.name));
+        top.appendChild(el("span", "dish__dots"));
+        top.appendChild(el("span", "dish__price", "$" + d.price.toFixed(2)));
+        li.appendChild(top);
+        if (d.desc) li.appendChild(el("p", "dish__desc", d.desc));
+        ul.appendChild(li);
+      });
+      card.appendChild(ul);
+      wrap.appendChild(card);
     });
   }
 
@@ -445,7 +491,7 @@
         var target = document.querySelector(a.getAttribute("href"));
         if (!target) return;
         e.preventDefault();
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        target.scrollIntoView({ behavior: SMOOTH, block: "start" });
         history.replaceState(null, "", a.getAttribute("href"));
       });
     });
@@ -453,13 +499,17 @@
 
   // on wider screens the whole week sits open beside today's special
   if (window.matchMedia("(min-width: 720px)").matches) {
-    document.querySelector(".week").open = true;
+    var wk = document.querySelector(".week");
+    wk.open = true;
+    // the week is always shown here, so its heading is not a control
+    wk.querySelector("summary").setAttribute("tabindex", "-1");
   }
 
   document.getElementById("year").textContent = now.y;
   renderStatus();
   renderSpecials();
   renderCats();
+  renderDrinks();
   initBooking();
   renderHours();
   initScroll();
